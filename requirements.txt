@@ -1,0 +1,15 @@
+# Runtime
+azure-eventhub==5.11.7
+azure-identity==1.16.1
+python-dotenv==1.0.1
+
+# Function App
+azure-functions==1.21.3
+pyodbc==5.1.0
+
+# dbt
+dbt-synapse==1.8.0
+
+# Dev / CI
+pytest==8.2.2
+ruff==0.4.10

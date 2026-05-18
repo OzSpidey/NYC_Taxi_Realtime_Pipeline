@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: gold_borough_revenue
+    description: >
+      Hourly borough-level revenue aggregated from Stream Analytics output.
+      Consumed directly by Power BI dashboards. Includes surge_premium_usd
+      which measures extra revenue from surge pricing.
+    columns:
+      - name: borough
+        tests:
+          - not_null
+      - name: ride_date
+        tests:
+          - not_null
+      - name: total_rides
+        tests:
+          - not_null
+      - name: total_revenue_usd
+        tests:
+          - not_null
+      - name: surge_premium_usd
+        description: Revenue above what would have been earned at 1x multiplier

@@ -1,0 +1,11 @@
+nyc_taxi:
+  target: dev
+  outputs:
+    dev:
+      type: synapse
+      driver: 'ODBC Driver 18 for SQL Server'
+      server: "{{ env_var('DBT_SYNAPSE_SERVER') }}"
+      port: 1433
+      database: "{{ env_var('DBT_SYNAPSE_DATABASE') }}"
+      schema: dbt_dev
+      authentication: ActiveDirectoryMsi
