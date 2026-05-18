@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: raw
+    description: >
+      External tables in Synapse pointing at Stream Analytics Parquet output
+      in ADLS Gen2 /silver/. Populated by the Stream Analytics tumbling-window
+      revenue query.
+    schema: raw
+    tables:
+      - name: revenue_windows
+        description: >
+          5-minute tumbling-window revenue aggregates per pickup borough,
+          written by Azure Stream Analytics.
+        columns:
+          - name: pickup_borough
+            description: NYC borough where the ride started
+          - name: window_end
+            description: End timestamp of the 5-minute tumbling window (UTC)
+          - name: ride_count
+            description: Number of rides completed in this window
+          - name: total_revenue
+            description: Sum of all fare amounts in USD
+          - name: avg_fare
+            description: Average fare amount in USD
+          - name: avg_surge
+            description: Average surge multiplier (1.0 = no surge)
+          - name: avg_distance
+            description: Average ride distance in miles
