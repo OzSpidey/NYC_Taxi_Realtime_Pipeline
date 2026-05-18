@@ -9,6 +9,7 @@ pyodbc==5.1.0
 
 # dbt
 dbt-synapse==1.8.0
+dbt-duckdb==1.8.1   # CI-only adapter (no ODBC needed for syntax validation)
 
 # Dev / CI
 pytest==8.2.2

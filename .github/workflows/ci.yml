@@ -43,15 +43,12 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dbt-synapse
-        run: pip install dbt-synapse
+      - name: Install dbt-duckdb (CI adapter — no ODBC required)
+        run: pip install dbt-duckdb
 
-      - name: dbt compile
+      - name: dbt parse (syntax validation against DuckDB CI target)
         working-directory: dbt
-        env:
-          DBT_SYNAPSE_SERVER:   placeholder.sql.azuresynapse.net
-          DBT_SYNAPSE_DATABASE: placeholder
-        run: dbt compile --profiles-dir . --target dev
+        run: dbt parse --profiles-dir . --target ci
 
   # ────────────────────────────────────────────────────────────
   terraform-plan:

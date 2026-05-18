@@ -9,3 +9,9 @@ nyc_taxi:
       database: "{{ env_var('DBT_SYNAPSE_DATABASE') }}"
       schema: dbt_dev
       authentication: ActiveDirectoryMsi
+
+    # CI target — uses DuckDB (pure Python, no ODBC) for syntax validation
+    ci:
+      type: duckdb
+      path: /tmp/nyctaxi_ci.duckdb
+      schema: main
