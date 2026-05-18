@@ -3,12 +3,14 @@ Unit tests — no Azure credentials needed.
 Run: pytest tests/ -v
 """
 
-import json
 import importlib
+import importlib.util
+import json
+import pathlib
 import sys
 import types
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime
 from unittest.mock import MagicMock, patch
 
 
@@ -72,8 +74,6 @@ _stub_azure_modules()
 
 
 # ── Import modules under test ─────────────────────────────────────────────────
-
-import importlib.util, pathlib
 
 _BASE = pathlib.Path(__file__).parent.parent
 
