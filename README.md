@@ -7,13 +7,13 @@
 ![Terraform](https://img.shields.io/badge/IaC-Terraform-7B42BC?logo=terraform)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-> A production-grade, end-to-end **real-time data engineering pipeline** on Azure — from raw event ingestion to a Power BI–ready Gold table — built to demonstrate the skills that get data engineers hired.
+> A production-grade, end-to-end **real-time data engineering pipeline** on Azure, from raw event ingestion to a Power BI–ready Gold table, built to demonstrate the skills that get data engineers hired.
 
 ---
 
 ## What This Project Does
 
-This pipeline simulates a live NYC taxi fleet streaming thousands of ride events per minute into Azure. It processes those events in real-time using **three different window strategies**, alerts on surge pricing, stores everything in a medallion data lake, and serves a clean Gold table to a BI dashboard — all provisioned with a single Terraform command and deployed automatically via GitHub Actions.
+This pipeline simulates a live NYC taxi fleet streaming thousands of ride events per minute into Azure. It processes those events in real-time using **three different window strategies**, alerts on surge pricing, stores everything in a medallion data lake, and serves a clean Gold table to a BI dashboard, all provisioned with a single Terraform command and deployed automatically via GitHub Actions.
 
 ```
 Event Producer (Python)
@@ -74,7 +74,7 @@ azure-realtime-pipeline/
 │   └── queries.sql                # 4 concurrent window queries
 │
 ├── function_app/
-│   └── function_app.py            # Azure Function — surge alert MERGE upsert
+│   └── function_app.py            # Azure Function, surge alert MERGE upsert
 │
 ├── dbt/
 │   ├── dbt_project.yml
@@ -103,19 +103,19 @@ azure-realtime-pipeline/
 
 ## Key Concepts Demonstrated
 
-**Three window types — and why each one matters:**
+**Three window types, and why each one matters:**
 
 | Window | Query | Business Use Case |
 |---|---|---|
-| **Tumbling** (5 min) | Revenue dashboard | Non-overlapping buckets — each ride counted once; clean for billing |
-| **Sliding** (2 min) | Surge alerts | Fires on every new event, looks back 2 min — instant reaction |
-| **Hopping** (10 min / 1 min hop) | Driver leaderboard | Overlapping windows — smooth rolling rankings updated every minute |
+| **Tumbling** (5 min) | Revenue dashboard | Non-overlapping buckets, each ride counted once; clean for billing |
+| **Sliding** (2 min) | Surge alerts | Fires on every new event, looks back 2 min, instant reaction |
+| **Hopping** (10 min / 1 min hop) | Driver leaderboard | Overlapping windows, smooth rolling rankings updated every minute |
 
-**Idempotent writes** — the Azure Function uses a SQL `MERGE` statement so re-delivered events (Azure guarantees at-least-once) never create duplicate rows.
+**Idempotent writes**, the Azure Function uses a SQL `MERGE` statement so re-delivered events (Azure guarantees at-least-once) never create duplicate rows.
 
-**Medallion architecture** — raw events land in Bronze, Stream Analytics aggregates land in Silver, dbt promotes to Gold. Power BI only ever touches Gold.
+**Medallion architecture**, raw events land in Bronze, Stream Analytics aggregates land in Silver, dbt promotes to Gold. Power BI only ever touches Gold.
 
-**Zero-credential local testing** — all 15 unit tests mock the Azure SDK at import time, so anyone can clone and run `pytest` without an Azure account.
+**Zero-credential local testing**, all 15 unit tests mock the Azure SDK at import time, so anyone can clone and run `pytest` without an Azure account.
 
 ---
 
@@ -125,13 +125,13 @@ azure-realtime-pipeline/
 
 - Python 3.11+
 - An Azure account (free tier works)
-- Azure CLI — [install guide](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
-- Terraform >= 1.5 — [install guide](https://developer.hashicorp.com/terraform/install)
-- dbt-synapse — installed via `requirements.txt`
+- Azure CLI, [install guide](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+- Terraform >= 1.5, [install guide](https://developer.hashicorp.com/terraform/install)
+- dbt-synapse, installed via `requirements.txt`
 
 ---
 
-### Step 1 — Clone the repo
+### Step 1, Clone the repo
 
 ```bash
 git clone https://github.com/OzSpidey/azure-realtime-pipeline.git
@@ -140,7 +140,7 @@ cd azure-realtime-pipeline
 
 ---
 
-### Step 2 — Set up Python environment
+### Step 2, Set up Python environment
 
 ```bash
 python -m venv .venv
@@ -156,17 +156,17 @@ pip install -r requirements.txt
 
 ---
 
-### Step 3 — Run the unit tests (no Azure needed)
+### Step 3, Run the unit tests (no Azure needed)
 
 ```bash
 pytest tests/ -v
 ```
 
-All 15 tests should pass immediately — no credentials, no network.
+All 15 tests should pass immediately, no credentials, no network.
 
 ---
 
-### Step 4 — Provision Azure infrastructure
+### Step 4, Provision Azure infrastructure
 
 ```bash
 az login
@@ -180,7 +180,7 @@ This creates: Resource Group, Event Hubs namespace + hub + 2 consumer groups, AD
 
 ---
 
-### Step 5 — Configure environment variables
+### Step 5, Configure environment variables
 
 Create a `.env` file in the project root:
 
@@ -192,7 +192,7 @@ EVENTS_PER_SECOND=10
 
 ---
 
-### Step 6 — Deploy the Stream Analytics queries
+### Step 6, Deploy the Stream Analytics queries
 
 In the Azure Portal:
 1. Navigate to your Stream Analytics job (`asa-nyctaxi-dev`)
@@ -202,17 +202,17 @@ In the Azure Portal:
 
 ---
 
-### Step 7 — Deploy the Azure Function
+### Step 7, Deploy the Azure Function
 
 ```bash
-# From project root — uses the GitHub Actions workflow on push to main,
+# From project root, uses the GitHub Actions workflow on push to main,
 # or deploy manually with the Azure Functions Core Tools:
 func azure functionapp publish func-surge-dev --python
 ```
 
 ---
 
-### Step 8 — Start the event producer
+### Step 8, Start the event producer
 
 ```bash
 python src/event_producer.py
@@ -222,7 +222,7 @@ Events start flowing at ~10/sec. Watch ADLS Gen2 Bronze container fill up with P
 
 ---
 
-### Step 9 — Run dbt transformations
+### Step 9, Run dbt transformations
 
 ```bash
 cd dbt
